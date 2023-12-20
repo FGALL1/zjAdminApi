@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--2023-11-21 tianyuan.wang 写入和查询都忽略reserviorCode，大坝和水库的关联统一通过建筑物关联表处理(building_associated_site), 同时需要注意水库永远为主体-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unytech.project.basics.mapper.AttDamBaseMapper">
+
+    <resultMap type="AttDamBase" id="AttDamBaseResult">
+        <result property="damCode" column="DAM_CODE"/>
+        <result property="damName" column="DAM_NAME"/>
+        <result property="startLong" column="START_LONG"/>
+        <result property="startLat" column="START_LAT"/>
+        <result property="endLong" column="END_LONG"/>
+        <result property="endLat" column="END_LAT"/>
+        <result property="damLoc" column="DAM_LOC"/>
+        <result property="ifMainDam" column="IF_MAIN_DAM"/>
+        <result property="engGrad" column="ENG_GRAD"/>
+        <result property="damGrad" column="DAM_GRAD"/>
+        <result property="damMaxHeig" column="DAM_MAX_HEIG"/>
+        <result property="damTopLen" column="DAM_TOP_LEN"/>
+        <result property="damTopWid" column="DAM_TOP_WID"/>
+        <result property="elevSys" column="ELEV_SYS"/>
+        <result property="damTopElev" column="DAM_TOP_ELEV"/>
+        <result property="damTypeMat" column="DAM_TYPE_MAT"/>
+        <result property="damTypeStr" column="DAM_TYPE_STR"/>
+        <result property="engStat" column="ENG_STAT"/>
+        <result property="startDate" column="START_DATE"/>
+        <result property="compDate" column="COMP_DATE"/>
+        <result property="note" column="NOTE"/>
+        <result property="effDate" column="EFF_DATE"/>
+        <result property="exprDate" column="EXPR_DATE"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="flag" column="flag"/>
+        <result property="buildingUse" column="building_use"/>
+        <result property="mentId" column="ment_id"/>
+        <result property="mentPerson" column="ment_person"/>
+        <result property="cusmentId" column="cusment_id"/>
+        <result property="cusmentPerson" column="cusment_person"/>
+    </resultMap>
+
+    <sql id="selectAttDamBaseVo">
+        select DAM_CODE,
+               DAM_NAME,
+               START_LONG,
+               START_LAT,
+               END_LONG,
+               END_LAT,
+               DAM_LOC,
+               IF_MAIN_DAM,
+               ENG_GRAD,
+               DAM_GRAD,
+               DAM_MAX_HEIG,
+               DAM_TOP_LEN,
+               DAM_TOP_WID,
+               ELEV_SYS,
+               DAM_TOP_ELEV,
+               DAM_TYPE_MAT,
+               DAM_TYPE_STR,
+               ENG_STAT,
+               START_DATE,
+               COMP_DATE,
+               NOTE,
+               EFF_DATE,
+               EXPR_DATE,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               flag,
+               building_use,
+               ment_id,
+               ment_person,
+               cusment_id,
+               cusment_person
+        from att_dam_base
+    </sql>
+
+    <select id="selectAttDamBaseList" parameterType="AttDamBase" resultMap="AttDamBaseResult">
+        <include refid="selectAttDamBaseVo"/>
+        <where>
+            <if test="damName != null  and damName != ''">and DAM_NAME like concat('%', #{damName}, '%')</if>
+            <if test="startLong != null ">and START_LONG = #{startLong}</if>
+            <if test="startLat != null ">and START_LAT = #{startLat}</if>
+            <if test="endLong != null ">and END_LONG = #{endLong}</if>
+            <if test="endLat != null ">and END_LAT = #{endLat}</if>
+            <if test="damLoc != null  and damLoc != ''">and DAM_LOC = #{damLoc}</if>
+            <if test="ifMainDam != null  and ifMainDam != ''">and IF_MAIN_DAM = #{ifMainDam}</if>
+            <if test="engGrad != null  and engGrad != ''">and ENG_GRAD = #{engGrad}</if>
+            <if test="damGrad != null  and damGrad != ''">and DAM_GRAD = #{damGrad}</if>
+            <if test="damMaxHeig != null ">and DAM_MAX_HEIG = #{damMaxHeig}</if>
+            <if test="damTopLen != null ">and DAM_TOP_LEN = #{damTopLen}</if>
+            <if test="damTopWid != null ">and DAM_TOP_WID = #{damTopWid}</if>
+            <if test="elevSys != null  and elevSys != ''">and ELEV_SYS = #{elevSys}</if>
+            <if test="damTopElev != null ">and DAM_TOP_ELEV = #{damTopElev}</if>
+            <if test="damTypeMat != null  and damTypeMat != ''">and DAM_TYPE_MAT = #{damTypeMat}</if>
+            <if test="damTypeStr != null  and damTypeStr != ''">and DAM_TYPE_STR = #{damTypeStr}</if>
+            <if test="engStat != null  and engStat != ''">and ENG_STAT = #{engStat}</if>
+            <if test="startDate != null ">and START_DATE = #{startDate}</if>
+            <if test="compDate != null ">and COMP_DATE = #{compDate}</if>
+            <if test="note != null  and note != ''">and NOTE = #{note}</if>
+            <if test="exprDate != null ">and EXPR_DATE = #{exprDate}</if>
+            <if test="flag != null  and flag != ''">and flag = #{flag}</if>
+            <if test="buildingUse != null  and buildingUse != ''">and building_use = #{buildingUse}</if>
+            <if test="mentId != null  and mentId != ''">and ment_id = #{mentId}</if>
+            <if test="mentPerson != null  and mentPerson != ''">and ment_person = #{mentPerson}</if>
+            <if test="cusmentId != null  and cusmentId != ''">and cusment_id = #{cusmentId}</if>
+            <if test="cusmentPerson != null  and cusmentPerson != ''">and cusment_person = #{cusmentPerson}</if>
+        </where>
+    </select>
+
+    <select id="selectAttDamBaseById" parameterType="String" resultMap="AttDamBaseResult">
+        <include refid="selectAttDamBaseVo"/>
+        where DAM_CODE = #{damCode}
+    </select>
+
+    <insert id="insertAttDamBase" parameterType="AttDamBase">
+        insert into att_dam_base
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="damCode != null and damCode != ''">DAM_CODE,</if>
+            <if test="damName != null and damName != ''">DAM_NAME,</if>
+            --
+            <if test="reserviorCode != null and reserviorCode != ''">reservior_code,</if>
+            <if test="startLong != null">START_LONG,</if>
+            <if test="startLat != null">START_LAT,</if>
+            <if test="endLong != null">END_LONG,</if>
+            <if test="endLat != null">END_LAT,</if>
+            <if test="damLoc != null and damLoc != ''">DAM_LOC,</if>
+            <if test="ifMainDam != null and ifMainDam != ''">IF_MAIN_DAM,</if>
+            <if test="engGrad != null and engGrad != ''">ENG_GRAD,</if>
+            <if test="damGrad != null and damGrad != ''">DAM_GRAD,</if>
+            <if test="damMaxHeig != null">DAM_MAX_HEIG,</if>
+            <if test="damTopLen != null">DAM_TOP_LEN,</if>
+            <if test="damTopWid != null">DAM_TOP_WID,</if>
+            <if test="elevSys != null and elevSys != ''">ELEV_SYS,</if>
+            <if test="damTopElev != null">DAM_TOP_ELEV,</if>
+            <if test="damTypeMat != null and damTypeMat != ''">DAM_TYPE_MAT,</if>
+            <if test="damTypeStr != null and damTypeStr != ''">DAM_TYPE_STR,</if>
+            <if test="engStat != null and engStat != ''">ENG_STAT,</if>
+            <if test="startDate != null">START_DATE,</if>
+            <if test="compDate != null">COMP_DATE,</if>
+            <if test="note != null and note != ''">NOTE,</if>
+            <if test="effDate != null">EFF_DATE,</if>
+            <if test="exprDate != null">EXPR_DATE,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="flag != null and flag != ''">flag,</if>
+            <if test="buildingUse != null and buildingUse != ''">building_use,</if>
+            <if test="mentId != null and mentId != ''">ment_id,</if>
+            <if test="mentPerson != null and mentPerson != ''">ment_person,</if>
+            <if test="cusmentId != null and cusmentId != ''">cusment_id,</if>
+            <if test="cusmentPerson != null and cusmentPerson != ''">cusment_person,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="damCode != null and damCode != ''">#{damCode},</if>
+            <if test="damName != null and damName != ''">#{damName},</if>
+            <!--            <if test="reserviorCode != null and reserviorCode != ''">#{reserviorCode},</if>-->
+            <if test="startLong != null">#{startLong},</if>
+            <if test="startLat != null">#{startLat},</if>
+            <if test="endLong != null">#{endLong},</if>
+            <if test="endLat != null">#{endLat},</if>
+            <if test="damLoc != null and damLoc != ''">#{damLoc},</if>
+            <if test="ifMainDam != null and ifMainDam != ''">#{ifMainDam},</if>
+            <if test="engGrad != null and engGrad != ''">#{engGrad},</if>
+            <if test="damGrad != null and damGrad != ''">#{damGrad},</if>
+            <if test="damMaxHeig != null">#{damMaxHeig},</if>
+            <if test="damTopLen != null">#{damTopLen},</if>
+            <if test="damTopWid != null">#{damTopWid},</if>
+            <if test="elevSys != null and elevSys != ''">#{elevSys},</if>
+            <if test="damTopElev != null">#{damTopElev},</if>
+            <if test="damTypeMat != null and damTypeMat != ''">#{damTypeMat},</if>
+            <if test="damTypeStr != null and damTypeStr != ''">#{damTypeStr},</if>
+            <if test="engStat != null and engStat != ''">#{engStat},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="compDate != null">#{compDate},</if>
+            <if test="note != null and note != ''">#{note},</if>
+            <if test="effDate != null">#{effDate},</if>
+            <if test="exprDate != null">#{exprDate},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="flag != null and flag != ''">#{flag},</if>
+            <if test="buildingUse != null and buildingUse != ''">#{buildingUse},</if>
+            <if test="mentId != null and mentId != ''">#{mentId},</if>
+            <if test="mentPerson != null and mentPerson != ''">#{mentPerson},</if>
+            <if test="cusmentId != null and cusmentId != ''">#{cusmentId},</if>
+            <if test="cusmentPerson != null and cusmentPerson != ''">#{cusmentPerson},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAttDamBase" parameterType="AttDamBase">
+        update att_dam_base
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="damName != null and damName != ''">DAM_NAME = #{damName},</if>
+            <if test="startLong != null">START_LONG = #{startLong},</if>
+            <if test="startLat != null">START_LAT = #{startLat},</if>
+            <if test="endLong != null">END_LONG = #{endLong},</if>
+            <if test="endLat != null">END_LAT = #{endLat},</if>
+            <if test="damLoc != null and damLoc != ''">DAM_LOC = #{damLoc},</if>
+            <if test="ifMainDam != null and ifMainDam != ''">IF_MAIN_DAM = #{ifMainDam},</if>
+            <if test="engGrad != null and engGrad != ''">ENG_GRAD = #{engGrad},</if>
+            <if test="damGrad != null and damGrad != ''">DAM_GRAD = #{damGrad},</if>
+            <if test="damMaxHeig != null">DAM_MAX_HEIG = #{damMaxHeig},</if>
+            <if test="damTopLen != null">DAM_TOP_LEN = #{damTopLen},</if>
+            <if test="damTopWid != null">DAM_TOP_WID = #{damTopWid},</if>
+            <if test="elevSys != null and elevSys != ''">ELEV_SYS = #{elevSys},</if>
+            <if test="damTopElev != null">DAM_TOP_ELEV = #{damTopElev},</if>
+            <if test="damTypeMat != null and damTypeMat != ''">DAM_TYPE_MAT = #{damTypeMat},</if>
+            <if test="damTypeStr != null and damTypeStr != ''">DAM_TYPE_STR = #{damTypeStr},</if>
+            <if test="engStat != null and engStat != ''">ENG_STAT = #{engStat},</if>
+            <if test="startDate != null">START_DATE = #{startDate},</if>
+            <if test="compDate != null">COMP_DATE = #{compDate},</if>
+            <if test="note != null and note != ''">NOTE = #{note},</if>
+            <if test="effDate != null">EFF_DATE = #{effDate},</if>
+            <if test="exprDate != null">EXPR_DATE = #{exprDate},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="flag != null and flag != ''">flag = #{flag},</if>
+            <if test="buildingUse != null and buildingUse != ''">building_use = #{buildingUse},</if>
+            <if test="mentId != null and mentId != ''">ment_id = #{mentId},</if>
+            <if test="mentPerson != null and mentPerson != ''">ment_person = #{mentPerson},</if>
+            <if test="cusmentId != null and cusmentId != ''">cusment_id = #{cusmentId},</if>
+            <if test="cusmentPerson != null and cusmentPerson != ''">cusment_person = #{cusmentPerson},</if>
+        </trim>
+        where DAM_CODE = #{damCode}
+    </update>
+
+    <delete id="deleteAttDamBaseById" parameterType="String">
+        delete
+        from att_dam_base
+        where DAM_CODE = #{damCode}
+    </delete>
+
+    <delete id="deleteAttDamBaseByIds" parameterType="String">
+        delete from att_dam_base where DAM_CODE in
+        <foreach item="damCode" collection="array" open="(" separator="," close=")">
+            #{damCode}
+        </foreach>
+    </delete>
+
+    <select id="selectAttDamBaseListByUsed" parameterType="SitesOfBuildingVO" resultMap="AttDamBaseResult">
+        SELECT
+        *
+        FROM
+        att_dam_base a
+        WHERE
+        NOT EXISTS ( SELECT * FROM building_associated_site b WHERE
+        <if test="buildingId != null and buildingId != ''">
+            b.building_id != #{buildingId} AND
+        </if>
+        b.building_type =#{buildingType} AND b.site_type =#{siteType} AND a.DAM_CODE = b.site_id )
+    </select>
+</mapper>
